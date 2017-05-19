@@ -118,7 +118,8 @@ def quiver(size=50, layers=5):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Easy NAMS Plotting.')
+    parser = argparse.ArgumentParser(description='Easy way to produce plots of\
+    3D vector fields in python.')
     parser.add_argument('task',
                         help='task name',
                         type=str)
