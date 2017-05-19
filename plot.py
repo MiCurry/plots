@@ -4,7 +4,6 @@ import os
 import string
 
 import numpy as np
-#import scipy
 import matplotlib
 matplotlib.use('Agg') # Disables the need for the monitor
 import matplotlib.pyplot as pyplot
@@ -54,7 +53,13 @@ def stream(size=11, layers=2, density=2, minLength=2, fileTag="0"):
     ax = fig.add_subplot(111)
     ax.axis([0, size-1, 0, size-1]) # Axis
 
+    """
+    A Load of different color schemes
+    """
     colors = ['b','g','r','c','m']
+    #colors = ['#2300e6','#a4fea9']
+    #colors_green = ['#00a302', '#2dd22f', '#aad4ab']
+    #colors = ['#00bd02', '#060fea', '#95042d']
 
     # Generate Data
     x = np.arange(0, size, 1)
@@ -70,15 +75,16 @@ def stream(size=11, layers=2, density=2, minLength=2, fileTag="0"):
 
     print "Plotting Layer:",
     for i in range(layers):
-        print "{0},".format(i),
+        print "{0}..".format(i),
         ax.streamplot(x, y, vector_v[i], vector_u[i],
                       color=colors[i],
                       density=density,
                       minlength=minLength,
                       )
+        print "done ",
 
 
-    fileName = "stream" + str(size) + "x" + str(size) + "-" + str(layers) + "-" + str(density) + "-" + str(minLength) + "-" + fileTag
+    fileName = "stream" + str(size) + "x" + str(size) + "-" + str(layers) + "-" + str(density) + "-" + str(minLength) + "-" + fileTag + ".png"
     fig.savefig(fileName,
                 dpi = 500,
                 bbox_inches='tight',
@@ -134,8 +140,8 @@ if __name__ == "__main__":
                         default=1)
     parser.add_argument("-l", '--length',
                         help='int - length or min length',
-                        type=int,
-                        default=1)
+                        type=float,
+                        default=0.1)
     args = parser.parse_args()
 
     if args.task == "quiver":
