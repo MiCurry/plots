@@ -56,10 +56,10 @@ def stream(size=11, layers=2, density=2, minLength=2, fileTag="0"):
     """
     A Load of different color schemes
     """
-    colors = ['b','g','r','c','m']
+    #colors = ['b','g','r','c','m']
     #colors = ['#2300e6','#a4fea9']
-    #colors_green = ['#00a302', '#2dd22f', '#aad4ab']
-    #colors = ['#00bd02', '#060fea', '#95042d']
+    #colors = ['#00a302', '#2dd22f', '#aad4ab']
+    colors = ['#00bd02', '#060fea', '#95042d']
 
     # Generate Data
     x = np.arange(0, size, 1)
@@ -76,25 +76,28 @@ def stream(size=11, layers=2, density=2, minLength=2, fileTag="0"):
     print "Plotting Layer:",
     for i in range(layers):
         print "{0}..".format(i),
+        print colors[i % 5]
         ax.streamplot(x, y, vector_v[i], vector_u[i],
-                      color=colors[i],
+                      color=colors[i % 5],
                       density=density,
                       minlength=minLength,
+                      arrowsize=0.1,
                       )
         print "done ",
 
 
-    fileName = "stream" + str(size) + "x" + str(size) + "-" + str(layers) + "-" + str(density) + "-" + str(minLength) + "-" + fileTag + ".png"
+    fileName = "stream" + str(size) + "x" + str(size) + "-" + str(layers) + "-" + str(int(density)) + "-" + str(int(minLength)) + "-" + fileTag + ".png"
+    print fileName
     fig.savefig(fileName,
-                dpi = 500,
+                dpi = 300,
                 bbox_inches='tight',
                 pad_inches=0,
-                transparent=True
+                transparent=False
                 )
     # Output
     return 1 # Success
 
-def quiver(size=50, layers=5):
+def quiver(size=50, layers=5, fileTag=""):
     fig = pyplot.figure()
     ax = fig.add_subplot(111)
 
@@ -103,15 +106,21 @@ def quiver(size=50, layers=5):
     vector_v = np.random.uniform(-1, 1, [layers, size, size])
     vector_u = np.random.uniform(-1, 1, [layers, size, size])
 
-    for i in range(5):
-        ax.quiver(vector_v[i], vector_u[i], color=colors[i])
+    print vector_u.shape
+    print vector_v.shape
+
+    print "Producing a graph with: size:{0}x{1}, layers:{2}".format(size, size, layers)
+    print "Plotting Layer:",
+    for i in range(vector_u.shape[0]):
+        print "{0}..".format(i),
+        ax.quiver(vector_v[i], vector_u[i], color=colors[i % 5])
 
 
     fig.savefig("vector.png",
                 dpi = 500,
                 bbox_inches='tight',
                 pad_inches=0,
-                transparent=True
+                transparent=False
                 )
 
     return 1 # Success
@@ -137,7 +146,7 @@ if __name__ == "__main__":
                         default=15)
     parser.add_argument("-p", '--density',
                         help='int - density of the plot (higher values mean more lines)',
-                        type=int,
+                        type=float,
                         default=1)
     parser.add_argument("-l", '--length',
                         help='int - length or min length',
