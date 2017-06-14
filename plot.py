@@ -59,7 +59,8 @@ def stream(size=11, layers=2, density=2, minLength=2, fileTag="0"):
     #colors = ['b','g','r','c','m']
     #colors = ['#2300e6','#a4fea9']
     #colors = ['#00a302', '#2dd22f', '#aad4ab']
-    colors = ['#00bd02', '#060fea', '#95042d']
+    #colors = ['#00bd02', '#060fea', '#95042d']
+    colors = ['#1258ed', '#dda580', '#c3d8c3']
 
     # Generate Data
     x = np.arange(0, size, 1)
@@ -68,7 +69,6 @@ def stream(size=11, layers=2, density=2, minLength=2, fileTag="0"):
     vector_v = np.random.uniform(-1, 1, [layers, size, size])
     vector_u = np.random.uniform(-1, 1, [layers, size, size])
     # End Generate Data
-
 
     # Plot Over Each Layer
     print "Producing a graph with: size:{0}x{1}, layers:{2}, density:{3}, minLength:{4}".format(size, size, layers, density, minLength)
