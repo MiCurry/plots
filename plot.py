@@ -10,11 +10,20 @@ import matplotlib.pyplot as pyplot
 
 verbose = 0
 
-#colors = ['b','g','r','c','m']
+# Comment and uncomment these arrays to get different colors
+colors = ['b','g','r','c','m']
 #colors = ['#2300e6','#a4fea9']
 #colors_green = ['#00a302', '#2dd22f', '#aad4ab']
-colors = ['#00bd02', '#060fea', '#95042d']
+#colors = ['#00bd02', '#060fea', '#95042d']
 
+
+''' def genData() - Generates u and v vector fields at size size by size and of
+layer l
+- size  : size of the plots
+- layer : layers of the plot
+- min   : minimum vector value
+- max   : maximum vector value
+'''
 def genData(size, layers, min=-1, max=1):
     x = np.arange(0, size, 1)
     y = np.arange(0, size, 1)
@@ -24,34 +33,13 @@ def genData(size, layers, min=-1, max=1):
 
     return vector_v, vector_u
 
-def contour(size=11, layers=1, density=1, minlength=2):
-    fig = pyplot.figure()
-    ax = fig.add_subplot(111)
-
-    colors = ['b','g','r','c','m']
-    x = np.arange(0, size, 1)
-    y = np.arange(0, size, 1)
-
-    vector_v = np.random.uniform(-1, 1, [layers, size, size])
-    vector_u = np.random.uniform(-1, 1, [layers, size, size])
-
-    for i in range(layers):
-        ax.streamplot(x, y, vector_v[i], vector_u[i],
-                      color=colors[i],
-                      density=density,
-                      minlength=minlength,
-                      )
-        #ax.streamplot(vector_v[i], vector_u[i], x, y, color=colors[i])
-
-    ax.axis([0, size-1, 0, size-1])
-    fig.savefig("stream-"+str(density)+"-"+str(minlength)+".png",
-                dpi = 500,
-                bbox_inches='tight',
-                pad_inches=0,
-                transparent=True
-                )
-
-    return 1 # Success
+""" def stream() - Produces a streamline plot of different sizes and depths
+-   size        : Size of plot [size x size]
+-   layers      : Number of layers of the plot
+-   density     : A streamline attribute
+-   minLength   : A streamline attribute
+-   fileTag     : If added will add a str to the filename produced
+"""
 
 def stream(size=10, layers=3, density=0, minLength=0, fileTag="0"):
     fig = pyplot.figure()
@@ -94,6 +82,10 @@ def stream(size=10, layers=3, density=0, minLength=0, fileTag="0"):
     # Output
     return 1 # Success
 
+""" def quiver() - Produces a quiver plot of different sizes and depths.
+-   size   : The size of the quiver plot. Will be generated as [size x size]
+-   layers : The number of layers or depths of the quiver plot
+"""
 def quiver(size=50, layers=5):
     fig = pyplot.figure()
     ax = fig.add_subplot(111)
