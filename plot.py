@@ -10,6 +10,11 @@ import matplotlib.pyplot as pyplot
 
 verbose = 0
 
+#colors = ['b','g','r','c','m']
+#colors = ['#2300e6','#a4fea9']
+#colors_green = ['#00a302', '#2dd22f', '#aad4ab']
+colors = ['#00bd02', '#060fea', '#95042d']
+
 def genData(size, layers, min=-1, max=1):
     x = np.arange(0, size, 1)
     y = np.arange(0, size, 1)
@@ -48,7 +53,7 @@ def contour(size=11, layers=1, density=1, minlength=2):
 
     return 1 # Success
 
-def stream(size=11, layers=2, density=2, minLength=2, fileTag="0"):
+def stream(size=10, layers=3, density=0, minLength=0, fileTag="0"):
     fig = pyplot.figure()
     ax = fig.add_subplot(111)
     ax.axis([0, size-1, 0, size-1]) # Axis
@@ -56,26 +61,21 @@ def stream(size=11, layers=2, density=2, minLength=2, fileTag="0"):
     """
     A Load of different color schemes
     """
-    colors = ['b','g','r','c','m']
-    #colors = ['#2300e6','#a4fea9']
-    #colors_green = ['#00a302', '#2dd22f', '#aad4ab']
-    #colors = ['#00bd02', '#060fea', '#95042d']
 
     # Generate Data
     x = np.arange(0, size, 1)
     y = np.arange(0, size, 1)
 
-    vector_v = np.random.uniform(-1, 1, [layers, size, size])
-    vector_u = np.random.uniform(-1, 1, [layers, size, size])
-    # End Generate Data
-
+    vector_v, vector_u = genData(size, layers, -1, 1)
 
     # Plot Over Each Layer
     print "Producing a graph with: size:{0}x{1}, layers:{2}, density:{3}, minLength:{4}".format(size, size, layers, density, minLength)
 
+
     print "Plotting Layer:",
     for i in range(layers):
         print "{0}..".format(i),
+
         ax.streamplot(x, y, vector_v[i], vector_u[i],
                       color=colors[i],
                       density=density,
@@ -103,7 +103,7 @@ def quiver(size=50, layers=5):
     vector_v = np.random.uniform(-1, 1, [layers, size, size])
     vector_u = np.random.uniform(-1, 1, [layers, size, size])
 
-    for i in range(5):
+    for i in range(layers):
         ax.quiver(vector_v[i], vector_u[i], color=colors[i])
 
 
@@ -147,8 +147,7 @@ if __name__ == "__main__":
 
     if args.task == "quiver":
         quiver(size      = args.size,
-               layers    = args.depths,
-               fileTag   = args.fileNameTag)
+               layers    = args.depths)
     if args.task == "stream":
         stream(size = args.size,
                layers = args.depths,
